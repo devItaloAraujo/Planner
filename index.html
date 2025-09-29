@@ -109,7 +109,7 @@
         }
         .time-block .block-name {
             font-weight: bold;
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1.3;
             margin-bottom: 4px;
             word-wrap: break-word;
@@ -118,53 +118,53 @@
             max-height: 2.6em;
         }
         .time-block .block-duration {
-            font-size: 10px;
+            font-size: 9px;
             opacity: 0.9;
         }
         
         /* Dynamic height classes for different durations */
         .time-block[style*="height: 30px"] {
-            font-size: 9px;
+            font-size: 8px;
         }
         .time-block[style*="height: 30px"] .block-name {
-            font-size: 8px;
+            font-size: 7px;
             line-height: 1.1;
         }
         .time-block[style*="height: 30px"] .block-duration {
-            font-size: 7px;
+            font-size: 6px;
         }
         
         .time-block[style*="height: 60px"] {
-            font-size: 12px;
+            font-size: 11px;
         }
         .time-block[style*="height: 60px"] .block-name {
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1.3;
         }
         .time-block[style*="height: 60px"] .block-duration {
-            font-size: 10px;
+            font-size: 9px;
         }
         
         .time-block[style*="height: 90px"] {
-            font-size: 13px;
+            font-size: 12px;
         }
         .time-block[style*="height: 90px"] .block-name {
-            font-size: 13px;
+            font-size: 12px;
             line-height: 1.3;
         }
         .time-block[style*="height: 90px"] .block-duration {
-            font-size: 11px;
+            font-size: 10px;
         }
         
         .time-block[style*="height: 120px"] {
-            font-size: 14px;
+            font-size: 13px;
         }
         .time-block[style*="height: 120px"] .block-name {
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.3;
         }
         .time-block[style*="height: 120px"] .block-duration {
-            font-size: 12px;
+            font-size: 11px;
         }
         .time-block.selected {
             border-color: #8B5CF6;
@@ -224,22 +224,6 @@
             overflow: visible !important;
         }
         
-        /* Mobile horizontal scroll for calendar */
-        @media (max-width: 768px) {
-            .calendar-container {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .calendar-grid-container {
-                min-width: 600px; /* Ensure minimum width for proper display */
-            }
-            
-            .days-header {
-                min-width: 600px; /* Match the grid width */
-            }
-        }
-        
         /* Snapshot card styles */
         .snapshot-card {
             background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
@@ -272,7 +256,7 @@
         .snapshot-thumbnail-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            grid-template-rows: repeat(17, 1fr);
+            grid-template-rows: repeat(18, 1fr);
             height: 100%;
             gap: 1px;
         }
@@ -371,9 +355,248 @@
             filter: invert(1);
         }
         
+        /* Todo List Styles */
+        .todo-item {
+            background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+            border: 1px solid #16213E;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .todo-item:hover {
+            border-color: #8B5CF6;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+        }
+        
+        .todo-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #8B5CF6;
+            border-radius: 4px;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .todo-checkbox.checked {
+            background: #8B5CF6;
+            border-color: #8B5CF6;
+        }
+        
+        .todo-checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .todo-text {
+            flex: 1;
+            color: #E2E8F0;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            transition: all 0.2s ease;
+            min-width: 0; /* Allow flex item to shrink below content size */
+        }
+        
+        .todo-text.completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+            color: #94A3B8;
+        }
+        
+        .todo-edit-input {
+            flex: 1;
+            background: #0F0F23;
+            border: 1px solid #8B5CF6;
+            border-radius: 4px;
+            padding: 8px;
+            color: #E2E8F0;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .todo-delete-btn {
+            width: 24px;
+            height: 24px;
+            background: rgba(239, 68, 68, 0.8);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .todo-item:hover .todo-delete-btn {
+            opacity: 1;
+        }
+        
+        .todo-delete-btn:hover {
+            background: rgba(239, 68, 68, 1);
+            transform: scale(1.1);
+        }
+        
+        /* Todo input textarea styling */
+        #newTodoInput {
+            min-height: 80px;
+            line-height: 1.5;
+        }
+        
+        /* Ensure button aligns with textarea on desktop */
+        @media (min-width: 768px) {
+            #addTodoBtn {
+                align-self: flex-start;
+                margin-top: 0;
+            }
+        }
+        
+        /* Todo tray button mobile styles */
+        @media (max-width: 768px) {
+            #todoTrayBtn span {
+                display: none;
+            }
+            #todoTray {
+                width: 100vw;
+                max-width: 320px;
+            }
+        }
+        
+        /* Ensure minimize buttons maintain consistent width */
+        .minimize-btn {
+            min-width: 32px !important;
+            width: 32px !important;
+            flex-shrink: 0 !important;
+        }
+        
+        /* Info card styles */
+        .info-card {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+            border: 2px solid #8B5CF6;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .info-card.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        
+        .time-slot-demo {
+            display: flex;
+            gap: 2px;
+            margin: 12px 0;
+        }
+        
+        .time-slot {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #16213E;
+            background: #0F0F23;
+            position: relative;
+        }
+        
+        .time-slot.filled {
+            background: #8B5CF6;
+        }
+        
+        .time-slot.half {
+            background: linear-gradient(45deg, #8B5CF6 50%, #0F0F23 50%);
+        }
+        
+        .time-slot::after {
+            content: attr(data-time);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            color: #94A3B8;
+            white-space: nowrap;
+        }
+        
+        .info-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .info-backdrop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Desktop width constraint for main sections */
+        @media (min-width: 1024px) {
+            .container.mx-auto {
+                max-width: 80% !important;
+            }
+        }
+        
+        /* Mobile bank hint - hidden by default, show only on mobile */
+        .mobile-bank-hint {
+            display: none; /* Hidden by default */
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: #94A3B8;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        /* Show only on mobile */
+        @media (max-width: 768px) {
+            .mobile-bank-hint {
+                display: block !important;
+            }
+        }
+        
         @media (max-width: 768px) {
             .grid-cell {
-                min-height: 50px;
+                min-height: 60px;
             }
             .hour-marker {
                 left: 50%;
@@ -381,6 +604,82 @@
             }
             .snapshot-thumbnail {
                 height: 100px;
+            }
+            
+            /* Mobile calendar section - maintain desktop proportions with horizontal scroll */
+            .calendar-section {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                scrollbar-color: #8B5CF6 #16213E;
+            }
+            
+            .calendar-section::-webkit-scrollbar {
+                height: 8px;
+            }
+            
+            .calendar-section::-webkit-scrollbar-track {
+                background: #16213E;
+                border-radius: 4px;
+            }
+            
+            .calendar-section::-webkit-scrollbar-thumb {
+                background: #8B5CF6;
+                border-radius: 4px;
+            }
+            
+            .calendar-section::-webkit-scrollbar-thumb:hover {
+                background: #7C3AED;
+            }
+            
+            .calendar-content {
+                min-width: 1140px !important; /* Ensure minimum width to maintain desktop proportions (added 60px for 6:00 row) */
+                width: max-content !important;
+            }
+            
+            .calendar-content .grid-cols-8 {
+                grid-template-columns: 80px repeat(7, 1fr); /* Fixed hour column + 7 equal day columns */
+            }
+            
+            /* Override any conflicting overflow settings on mobile */
+            .calendar-section.overflow-hidden {
+                overflow-x: auto !important;
+            }
+            
+            /* Mobile todo list improvements */
+            .todo-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            
+            .todo-item > div:first-child {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .todo-text {
+                font-size: 13px;
+                line-height: 1.3;
+                padding: 4px 0;
+            }
+            
+            .todo-delete-btn {
+                opacity: 1; /* Always visible on mobile for easier access */
+                position: absolute;
+                top: 8px;
+                right: 8px;
+            }
+            
+            .todo-item {
+                position: relative;
+                padding-right: 40px; /* Make space for delete button */
+            }
+            
+            /* Always show snapshot delete button on mobile */
+            .snapshot-delete-btn {
+                opacity: 1 !important;
             }
         }
     </style>
@@ -404,18 +703,61 @@
         <!-- Custom Block Creator -->
         <div id="creatorSection" class="mb-6 bg-dark-card rounded-lg shadow-xl overflow-visible">
             <div class="p-6 pb-0 flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-game-cyan mb-2">
-                    <svg class="inline-block w-8 h-8 mr-2 mb-1 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                        <circle cx="12" cy="12" r="9" stroke-width="1.8"></circle>
-                        <path d="M12 8v8M16 12H8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                    Criar Novo Bloco
-                </h2>
-                <button id="minimizeCreatorBtn" class="bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
+                <div class="flex items-center">
+                    <h2 class="text-xl font-bold text-game-cyan mb-2">
+                        <svg class="inline-block w-8 h-8 mr-2 mb-1 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <circle cx="12" cy="12" r="9" stroke-width="1.8"></circle>
+                            <path d="M12 8v8M16 12H8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        Criar Novo Bloco
+                    </h2>
+                    <button id="infoBtn" class="ml-1 w-4 h-4 bg-game-cyan hover:bg-cyan-600 text-white rounded-full flex items-center justify-center text-xs font-bold transition-all duration-200 hover:scale-110 -mt-6" title="Como funciona o sistema de blocos">
+                        ?
+                    </button>
+                </div>
+                <button id="minimizeCreatorBtn" class="minimize-btn bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
                     <span id="creatorToggleIcon">−</span>
                 </button>
             </div>
-            <div id="creatorContent" class="minimizable-content p-6 pt-4">
+            <div id="creatorContent" class="minimizable-content p-6 pt-4 relative">
+                <!-- Info Card -->
+                <div id="infoBackdrop" class="info-backdrop"></div>
+                <div id="infoCard" class="info-card">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-lg font-bold text-game-purple flex items-center">
+                            <span class="w-5 h-5 mr-2 text-center border border-game-purple rounded-full flex items-center justify-center text-xs">?</span>
+                            Como Funciona o Sistema de Blocos
+                        </h3>
+                        <button id="closeInfoCard" class="text-gray-400 hover:text-white text-xl">&times;</button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-white mb-2">⏰ Sistema de 30 Minutos</h4>
+                            <p class="text-sm text-gray-300">Todos os blocos são organizados em slots de 30 minutos. A duração mínima é 30 minutos.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-white mb-2">📝 Atividades Curtas</h4>
+                            <p class="text-sm text-gray-300">Para atividades menores que 30 minutos, você pode:</p>
+                            <ul class="text-sm text-gray-300 mt-2 ml-4 space-y-1">
+                                <li>• Combinar 2 atividades no mesmo bloco</li>
+                                <li>• Usar o campo "Nome e Comentários" para detalhar</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-white mb-2">🎯 Dicas Importantes</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Durações: 30m, 1h, 1h30m, 2h, etc.</li>
+                                <li>• Arraste blocos para reposicionar</li>
+                                <li>• Clique em um bloco para editar</li>
+                                <li>• Blocos colocados na grade podem começar em :00 ou :30</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-sm font-medium mb-2">Símbolo:</label>
@@ -504,6 +846,54 @@
             </div>
         </div>
 
+        <!-- Todo Tray Button -->
+        <div class="fixed top-10 right-2 md:top-20 md:right-4 z-40">
+            <button id="todoTrayBtn" class="bg-game-cyan hover:bg-cyan-600 text-white p-3 rounded-l-lg shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-2">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <span class="font-medium">Afazeres</span>
+            </button>
+        </div>
+
+        <!-- Todo Tray -->
+        <div id="todoTray" class="fixed top-0 right-0 h-full w-80 md:w-[28rem] bg-dark-card shadow-2xl transform translate-x-full transition-transform duration-300 z-50 border-l border-dark-border">
+            <div class="p-6 h-full flex flex-col">
+                <div class="flex items-center justify-between mb-6 flex-shrink-0">
+                    <h2 class="text-xl font-bold text-game-cyan flex items-center">
+                        <svg class="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                        Lista de Afazeres
+                    </h2>
+                    <button id="closeTodoTray" class="text-gray-400 hover:text-white text-xl">&times;</button>
+                </div>
+                
+                <div class="mb-4 flex-shrink-0">
+                    <div class="flex gap-2">
+                        <textarea id="newTodoInput" rows="3" placeholder="Adicionar nova tarefa..." class="flex-1 p-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text focus:border-game-cyan focus:outline-none resize-y"></textarea>
+                        <button id="addTodoBtn" class="bg-game-cyan hover:bg-cyan-600 text-white py-3 px-4 rounded-lg transition-colors font-bold">
+                            +
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="todoList" class="space-y-2 flex-1 overflow-y-auto">
+                    <!-- Todo items will be populated by JavaScript -->
+                </div>
+                
+                <div id="noTodosMessage" class="text-center text-dark-muted py-8 hidden flex-1 flex items-center justify-center">
+                    <div>
+                        <div class="text-4xl mb-2">📝</div>
+                        <p>Nenhuma tarefa adicionada ainda.</p>
+                        <p class="text-sm">Adicione sua primeira tarefa acima!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Bank of Blocks -->
         <div id="bankSection" class="mb-6 bg-dark-card rounded-lg shadow-xl">
             <div class="p-6 pb-0 flex justify-between items-center mb-4">
@@ -516,11 +906,14 @@
                     </svg>
                     Banco de Blocos
                 </h2>
-                <button id="minimizeBankBtn" class="bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
+                <button id="minimizeBankBtn" class="minimize-btn bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
                     <span id="bankToggleIcon">−</span>
                 </button>
             </div>
             <div id="bankContent" class="minimizable-content p-6 pt-4">
+                <div class="mobile-bank-hint">
+                    Você pode segurar um bloco com um dedo enquanto move a tela com outro.
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="blockBank">
                     <!-- Blocks will be populated by JavaScript -->
                 </div>
@@ -528,41 +921,43 @@
         </div>
 
         <!-- Calendar Grid -->
-        <div class="bg-dark-card rounded-lg shadow-xl overflow-hidden calendar-container">
-            <div class="day-header p-4 relative">
-                <h2 class="text-xl font-bold text-center">
-                    <svg class="inline-block w-8 h-8 mr-2 mb-1 align-middle text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                        <rect x="3" y="5" width="18" height="16" rx="2" stroke-width="1.8"></rect>
-                        <path d="M8 3v4M16 3v4M3 10h18" stroke-width="1.8" stroke-linecap="round"></path>
-                    </svg>
-                    Calendário Semanal
-                </h2>
-                <div class="absolute top-4 right-4 flex gap-2">
-                    <button id="saveWeekBtn" class="bg-game-green hover:bg-green-600 text-white p-2 rounded-lg transition-colors text-sm font-medium">
-                        Salvar Captura
-                    </button>
-                    <button id="clearGridBtn" class="bg-game-red hover:bg-red-600 text-white p-2 rounded-lg transition-colors text-sm font-medium">
-                        Limpar Grade
-                    </button>
+        <div class="bg-dark-card rounded-lg shadow-xl overflow-hidden calendar-section">
+            <div class="calendar-content">
+                <div class="day-header p-4 relative">
+                    <h2 class="text-xl font-bold text-center">
+                        <svg class="inline-block w-8 h-8 mr-2 mb-1 align-middle text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <rect x="3" y="5" width="18" height="16" rx="2" stroke-width="1.8"></rect>
+                            <path d="M8 3v4M16 3v4M3 10h18" stroke-width="1.8" stroke-linecap="round"></path>
+                        </svg>
+                        Calendário Semanal
+                    </h2>
+                    <div class="absolute top-4 right-4 flex gap-2">
+                        <button id="saveWeekBtn" class="bg-game-green hover:bg-green-600 text-white p-2 rounded-lg transition-colors text-sm font-medium">
+                            Salvar Captura
+                        </button>
+                        <button id="clearGridBtn" class="bg-game-red hover:bg-red-600 text-white p-2 rounded-lg transition-colors text-sm font-medium">
+                            Limpar Grade
+                        </button>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Days Header -->
-            <div class="grid grid-cols-8 bg-dark-border days-header">
-                <div class="p-3 text-center font-bold text-game-purple">Hora</div>
-                <div class="p-3 text-center font-bold">Segunda</div>
-                <div class="p-3 text-center font-bold">Terça</div>
-                <div class="p-3 text-center font-bold">Quarta</div>
-                <div class="p-3 text-center font-bold">Quinta</div>
-                <div class="p-3 text-center font-bold">Sexta</div>
-                <div class="p-3 text-center font-bold">Sábado</div>
-                <div class="p-3 text-center font-bold">Domingo</div>
-            </div>
+                
+                <!-- Days Header -->
+                <div class="grid grid-cols-8 bg-dark-border">
+                    <div class="p-3 text-center font-bold text-game-purple">Hora</div>
+                    <div class="p-3 text-center font-bold">Segunda</div>
+                    <div class="p-3 text-center font-bold">Terça</div>
+                    <div class="p-3 text-center font-bold">Quarta</div>
+                    <div class="p-3 text-center font-bold">Quinta</div>
+                    <div class="p-3 text-center font-bold">Sexta</div>
+                    <div class="p-3 text-center font-bold">Sábado</div>
+                    <div class="p-3 text-center font-bold">Domingo</div>
+                </div>
 
-            <!-- Calendar Grid -->
-            <div class="relative calendar-grid-container">
-                <div class="grid grid-cols-8" id="calendarGrid">
-                    <!-- Grid will be populated by JavaScript -->
+                <!-- Calendar Grid -->
+                <div class="relative">
+                    <div class="grid grid-cols-8" id="calendarGrid">
+                        <!-- Grid will be populated by JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -578,7 +973,7 @@
                     </svg>
                     Capturas
                 </h2>
-                <button id="minimizeSnapshotsBtn" class="bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
+                <button id="minimizeSnapshotsBtn" class="minimize-btn bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
                     <span id="snapshotsToggleIcon">−</span>
                 </button>
             </div>
@@ -597,28 +992,73 @@
         <!-- Memory Card Section -->
         <div id="memoryCardSection" class="mt-6 bg-dark-card rounded-lg shadow-xl">
             <div class="p-6 pb-0 flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-game-cyan mb-2">
-                    <svg class="inline-block w-8 h-8 mr-2 mb-1 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                        <path d="M6 3h9l3 3v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke-width="1.8" stroke-linejoin="round"></path>
-                        <rect x="8" y="7" width="5" height="4" stroke-width="1.8"></rect>
-                    </svg>
-                    Memory Card
-                </h2>
-                <button id="minimizeMemoryCardBtn" class="bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
+                <div class="flex items-center">
+                    <h2 class="text-xl font-bold text-game-cyan mb-2">
+                        <svg class="inline-block w-8 h-8 mr-2 mb-1 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                            <path d="M6 3h9l3 3v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke-width="1.8" stroke-linejoin="round"></path>
+                            <rect x="8" y="7" width="5" height="4" stroke-width="1.8"></rect>
+                        </svg>
+                        Memory Card
+                    </h2>
+                    <button id="memoryInfoBtn" class="ml-1 w-4 h-4 bg-game-cyan hover:bg-cyan-600 text-white rounded-full flex items-center justify-center text-xs font-bold transition-all duration-200 hover:scale-110 -mt-6" title="Como funciona o backup">
+                        ?
+                    </button>
+                </div>
+                <button id="minimizeMemoryCardBtn" class="minimize-btn bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
                     <span id="memoryCardToggleIcon">+</span>
                 </button>
             </div>
-            <div id="memoryCardContent" class="minimizable-content p-6 pt-4">
+            <div id="memoryCardContent" class="minimizable-content p-6 pt-4 relative">
+                <!-- Memory Info Card -->
+                <div id="memoryInfoBackdrop" class="info-backdrop"></div>
+                <div id="memoryInfoCard" class="info-card">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-lg font-bold text-game-purple flex items-center">
+                            <span class="w-5 h-5 mr-2 text-center border border-game-purple rounded-full flex items-center justify-center text-xs">?</span>
+                            Como Funciona o Backup
+                        </h3>
+                        <button id="closeMemoryInfoCard" class="text-gray-400 hover:text-white text-xl">&times;</button>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-white mb-2">💾 Onde Ficam Salvos os Dados</h4>
+                            <p class="text-sm text-gray-300">Seus dados ficam salvos no seu navegador (Chrome, Firefox, etc.) em um local chamado "Local Storage". É como um arquivo temporário que fica no seu computador ou celular.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-white mb-2">⚠️ Quando os Dados Podem Ser Perdidos</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Limpar dados do navegador</li>
+                                <li>• Usar modo incógnito/privado</li>
+                                <li>• Desinstalar o navegador</li>
+                                <li>• Formatar o computador/celular</li>
+                                <li>• Usar outro navegador</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-white mb-2">🛡️ Como se Proteger</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Use o "Exportar - Copiar" regularmente</li>
+                                <li>• Cole o texto em um arquivo de texto</li>
+                                <li>• Salve em um local seguro (Google Drive, etc.)</li>
+                                <li>• Faça backup antes de limpar o navegador</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
                 <p class="text-dark-muted mb-3">Copie e cole os dados formatados para salvar ou restaurar todo o planner.</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium mb-2 text-game-green">Dados para Exportar</label>
-                        <textarea id="exportTextarea" rows="8" readonly class="w-full p-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text resize-y" placeholder="Clique em 'Exportar - Copiar' para gerar os dados..."></textarea>
+                        <textarea id="exportTextarea" rows="4" readonly class="w-full p-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text resize-y" placeholder="Clique em 'Exportar - Copiar' para gerar os dados compactos..."></textarea>
                         <button id="exportMemoryBtn" class="w-full mt-2 bg-game-green hover:bg-green-600 text-white py-2 px-4 rounded-lg transition-colors">Exportar - Copiar</button>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-game-blue">Dados para Importar</label>
-                        <textarea id="importTextarea" rows="8" class="w-full p-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text resize-y" placeholder="Cole aqui os dados do Memory Card..."></textarea>
+                        <textarea id="importTextarea" rows="4" class="w-full p-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text resize-y" placeholder="Cole aqui os dados compactos do Memory Card..."></textarea>
                         <div class="flex gap-2 mt-2">
                             <button id="importMemoryBtn" class="flex-1 bg-game-blue hover:bg-blue-600 text-white py-2 px-4 rounded-lg transition-colors">Importar</button>
                             <button id="clearImportBtn" class="flex-1 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors">Limpar</button>
@@ -638,7 +1078,7 @@
                     </svg>
                     <span id="supportTitleText">Pague um café para o criador</span>
                 </h2>
-                <button id="minimizeSupportBtn" class="bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
+                <button id="minimizeSupportBtn" class="minimize-btn bg-gray-700 hover:bg-gray-600 border border-gray-500 hover:border-gray-400 text-gray-300 hover:text-white transition-all duration-200 rounded-lg w-8 h-8 flex items-center justify-center text-lg font-bold shadow-sm m-2 mb-2">
                     <span id="supportToggleIcon">−</span>
                 </button>
             </div>
@@ -649,11 +1089,8 @@
                     <!-- PIX Key + Copy -->
                     <div>
                         <label class="block text-sm font-medium mb-2">Chave PIX:</label>
-                        <div class="flex gap-2">
-                            <input id="pixKeyInput" type="text" readonly class="flex-1 p-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text select-all">
-                            <button id="copyPixBtn" class="bg-game-blue hover:bg-blue-600 text-white px-4 rounded-lg font-medium">Copiar</button>
-                        </div>
-                        <div class="text-xs text-dark-muted mt-2">A chave é copiada para sua área de transferência.</div>
+                        <input id="pixKeyInput" type="text" readonly class="w-full p-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text select-all">
+                        <div class="text-xs text-dark-muted mt-2">Copie a chave PIX acima ou use o QR code.</div>
                     </div>
 
                     <!-- QR Preview -->
@@ -856,13 +1293,10 @@
             <h3 class="text-xl font-bold mb-4 text-game-pink">☕ PIX - Apoie essa ferramenta</h3>
             <div class="flex flex-col items-center">
                 <img id="pixModalImg" src="https://raw.githubusercontent.com/devItaloAraujo/imageFolder/refs/heads/main/QrCodePix.png" alt="QR Code PIX" class="w-72 h-72 object-contain rounded border border-dark-border" />
-                <div class="w-full mt-4">
-                    <label class="block text-sm font-medium mb-2">Chave PIX:</label>
-                    <div class="flex gap-2">
-                        <input id="pixKeyInputModal" type="text" readonly class="flex-1 p-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text select-all">
-                        <button id="copyPixBtnModal" class="bg-game-blue hover:bg-blue-600 text-white px-4 rounded-lg font-medium">Copiar</button>
+                    <div class="w-full mt-4">
+                        <label class="block text-sm font-medium mb-2">Chave PIX:</label>
+                        <input id="pixKeyInputModal" type="text" readonly class="w-full p-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text select-all">
                     </div>
-                </div>
             </div>
             <button id="closePixModal" class="absolute top-4 right-4 text-dark-muted hover:text-white text-xl">✕</button>
         </div>
@@ -882,6 +1316,7 @@
                 this.supportConfig = null;
                 
                 this.hours = [];
+                this.hours.push(6); // Add 6:00 at the start
                 for (let i = 7; i <= 23; i++) {
                     this.hours.push(i);
                 }
@@ -910,6 +1345,10 @@
                 this.snapshots = [];
                 this.selectedSnapshot = null;
                 
+                // Todo list functionality
+                this.todos = [];
+                this.editingTodoId = null;
+                
                 this.init();
             }
 
@@ -921,8 +1360,6 @@
                 const pixKeyInputModal = document.getElementById('pixKeyInputModal');
                 const qrImg = document.getElementById('pixQrImg');
                 const qrImgModal = document.getElementById('pixModalImg');
-                const copyBtn = document.getElementById('copyPixBtn');
-                const copyBtnModal = document.getElementById('copyPixBtnModal');
                 const openModalBtn = document.getElementById('openPixModalBtn');
                 const modal = document.getElementById('pixModal');
                 const closeModalBtn = document.getElementById('closePixModal');
@@ -941,22 +1378,6 @@
                 if (pixKeyInputModal) pixKeyInputModal.value = this.supportConfig.pixKey;
                 qrImg.src = this.supportConfig.qrSrc;
                 if (qrImgModal) qrImgModal.src = this.supportConfig.qrSrc;
-
-                const doCopy = async (value) => {
-                    try {
-                        await navigator.clipboard.writeText(value);
-                        this.showToast('Chave PIX copiada!', 'success');
-                    } catch (_) {
-                        this.showToast('Não foi possível copiar. Selecione e copie manualmente.', 'error');
-                    }
-                };
-
-                if (copyBtn) {
-                    copyBtn.addEventListener('click', () => doCopy(this.supportConfig.pixKey));
-                }
-                if (copyBtnModal) {
-                    copyBtnModal.addEventListener('click', () => doCopy(this.supportConfig.pixKey));
-                }
 
                 const openModal = () => { if (modal) modal.classList.remove('hidden'); };
                 const closeModal = () => { if (modal) modal.classList.add('hidden'); };
@@ -994,6 +1415,8 @@
                 this.loadSnapshots();
                 this.renderSnapshots();
                 this.populateExportField();
+                this.loadTodos();
+                this.renderTodos();
                 // Support section config and setup
                 this.supportConfig = {
                     title: 'Pague um café para o criador',
@@ -1217,6 +1640,7 @@
                     });
                 }
 
+
                 // Memory Card minimize button
                 const minimizeMemoryCardBtn = document.getElementById('minimizeMemoryCardBtn');
                 const memoryCardContent = document.getElementById('memoryCardContent');
@@ -1300,6 +1724,7 @@
                     supportToggleIcon.textContent = '+';
                 }
 
+
                 // Memory Card: always start minimized (don't read persisted state)
                 const memoryCardContent = document.getElementById('memoryCardContent');
                 const memoryCardToggleIcon = document.getElementById('memoryCardToggleIcon');
@@ -1334,7 +1759,7 @@
                 bankBlock.className = `bank-block bg-${block.color} text-white p-4 rounded-lg block-shadow cursor-grab relative`;
                 bankBlock.innerHTML = `
                     <div class="font-bold">${block.name}</div>
-                    ${block.duration !== 0.5 ? `<div class="text-sm opacity-90">${block.duration}h</div>` : ''}
+                    ${block.duration !== 0.5 ? `<div class="text-sm opacity-90">${this.formatDuration(block.duration)}</div>` : ''}
                     <button class="delete-bank-btn absolute top-1 right-1 w-6 h-6 bg-red-500 hover:bg-red-600 rounded-full text-white text-xs flex items-center justify-center">×</button>
                 `;
                 bankBlock.draggable = true;
@@ -1488,6 +1913,104 @@
                         const disallowed = ['Backspace','Delete','Enter','Tab'];
                         if (disallowed.includes(e.key) || (e.key && e.key.length === 1)) e.preventDefault();
                     });
+                }
+
+                // Todo tray functionality
+                const todoTrayBtn = document.getElementById('todoTrayBtn');
+                const todoTray = document.getElementById('todoTray');
+                const closeTodoTray = document.getElementById('closeTodoTray');
+                
+                if (todoTrayBtn) {
+                    todoTrayBtn.addEventListener('click', () => {
+                        todoTray.classList.remove('translate-x-full');
+                    });
+                }
+                
+                if (closeTodoTray) {
+                    closeTodoTray.addEventListener('click', () => {
+                        todoTray.classList.add('translate-x-full');
+                    });
+                }
+                
+                // Close tray when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (todoTray && !todoTray.classList.contains('translate-x-full')) {
+                        // Check if click is outside the tray and not on the tray button
+                        if (!todoTray.contains(e.target) && !todoTrayBtn.contains(e.target)) {
+                            todoTray.classList.add('translate-x-full');
+                        }
+                    }
+                });
+
+                // Todo list event listeners
+                const addTodoBtn = document.getElementById('addTodoBtn');
+                const newTodoInput = document.getElementById('newTodoInput');
+                
+                if (addTodoBtn) {
+                    addTodoBtn.addEventListener('click', () => this.addTodo());
+                }
+                
+                if (newTodoInput) {
+                    newTodoInput.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            this.addTodo();
+                        }
+                    });
+                }
+
+                // Info card functionality
+                const infoBtn = document.getElementById('infoBtn');
+                const infoCard = document.getElementById('infoCard');
+                const infoBackdrop = document.getElementById('infoBackdrop');
+                const closeInfoCard = document.getElementById('closeInfoCard');
+                
+                if (infoBtn && infoCard && infoBackdrop && closeInfoCard) {
+                    const showInfoCard = () => {
+                        infoBackdrop.classList.add('show');
+                        infoCard.classList.add('show');
+                    };
+                    
+                    const hideInfoCard = () => {
+                        infoBackdrop.classList.remove('show');
+                        infoCard.classList.remove('show');
+                    };
+                    
+                    infoBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showInfoCard();
+                    });
+                    
+                    closeInfoCard.addEventListener('click', hideInfoCard);
+                    
+                    infoBackdrop.addEventListener('click', hideInfoCard);
+                }
+
+                // Memory Card info functionality
+                const memoryInfoBtn = document.getElementById('memoryInfoBtn');
+                const memoryInfoCard = document.getElementById('memoryInfoCard');
+                const memoryInfoBackdrop = document.getElementById('memoryInfoBackdrop');
+                const closeMemoryInfoCard = document.getElementById('closeMemoryInfoCard');
+                
+                if (memoryInfoBtn && memoryInfoCard && memoryInfoBackdrop && closeMemoryInfoCard) {
+                    const showMemoryInfoCard = () => {
+                        memoryInfoBackdrop.classList.add('show');
+                        memoryInfoCard.classList.add('show');
+                    };
+                    
+                    const hideMemoryInfoCard = () => {
+                        memoryInfoBackdrop.classList.remove('show');
+                        memoryInfoCard.classList.remove('show');
+                    };
+                    
+                    memoryInfoBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showMemoryInfoCard();
+                    });
+                    
+                    closeMemoryInfoCard.addEventListener('click', hideMemoryInfoCard);
+                    
+                    memoryInfoBackdrop.addEventListener('click', hideMemoryInfoCard);
                 }
             }
             
@@ -1783,7 +2306,7 @@
                             
                             blockElement.innerHTML = `
                                 <div class="block-name">${block.name}</div>
-                                ${block.duration !== 0.5 ? `<div class="block-duration">${block.duration}h</div>` : ''}
+                                ${block.duration !== 0.5 ? `<div class="block-duration">${this.formatDuration(block.duration)}</div>` : ''}
                             `;
                             blockElement.dataset.blockId = block.id;
                             
@@ -1816,7 +2339,17 @@
                 if (!this.isDragging) {
                     const deltaY = Math.abs(e.touches[0].clientY - this.touchStartY);
                     const deltaX = Math.abs(e.touches[0].clientX - this.touchStartX);
+                    
+                    // Only consider it dragging if there's significant movement
                     if (deltaY > 10 || deltaX > 10) {
+                        // Check if this is primarily a vertical scroll gesture
+                        const isVerticalScroll = deltaY > deltaX * 1.5; // Vertical movement is 1.5x more than horizontal
+                        
+                        if (isVerticalScroll) {
+                            // Allow natural scrolling, don't start drag
+                            return;
+                        }
+                        
                         this.isDragging = true;
                     }
                 }
@@ -1824,7 +2357,6 @@
                 if (this.isDragging) {
                     e.preventDefault();
                     // Visual feedback for dragging
-                    e.target.style.transform = 'scale(1.1) rotate(5deg)';
                     e.target.style.opacity = '0.8';
                     
                     // Auto-scroll for touch
@@ -2423,8 +2955,8 @@
             createThumbnailGrid(thumbnail) {
                 let gridHTML = '';
                 
-                // Create 7 days x 17 hours grid (7-23 + 0)
-                for (let hour = 7; hour <= 23; hour++) {
+                // Create 7 days x 18 hours grid (6-23 + 0)
+                for (let hour = 6; hour <= 23; hour++) {
                     for (let day = 0; day < 7; day++) {
                         gridHTML += `<div class="snapshot-thumbnail-cell" data-hour="${hour}" data-day="${day}"></div>`;
                     }
@@ -2630,11 +3162,12 @@
                         snapshots: (this.snapshots || []).map(s => ({
                             ...s,
                             blocks: (s.blocks || []).map(b => ({ ...b, startHalf: !!b.startHalf }))
-                        }))
+                        })),
+                        todos: this.todos || []
                     };
                     const exportTextarea = document.getElementById('exportTextarea');
                     if (exportTextarea) {
-                        exportTextarea.value = JSON.stringify(payload, null, 2);
+                        exportTextarea.value = JSON.stringify(payload);
                     }
                 } catch (err) {
                     console.error('Error populating export field:', err);
@@ -2652,7 +3185,7 @@
                         exportTextarea.select();
                         try {
                             document.execCommand('copy');
-                            this.showToast('Dados exportados para a área de transferência.', 'success');
+                            this.showToast('Dados compactos exportados para a área de transferência.', 'success');
                         } catch (_) {
                             this.showToast('Exportado. Copie o texto manualmente se desejar.', 'info');
                         }
@@ -2697,6 +3230,7 @@
                         ...s,
                         blocks: Array.isArray(s.blocks) ? s.blocks.map(b => ({ ...b, startHalf: !!b.startHalf })) : []
                     })) : [];
+                    const importedTodos = Array.isArray(data.todos) ? data.todos : [];
 
                     // Assign in-memory state
                     this.blocks = importedBlocks;
@@ -2704,6 +3238,7 @@
                     this.predefinedBlockModifications = importedMods;
                     this.removedPredefinedBlockNames = importedRemoved;
                     this.snapshots = importedSnapshots;
+                    this.todos = importedTodos;
 
                     // Persist to storage
                     this.saveBlocks();
@@ -2711,12 +3246,23 @@
                     this.savePredefinedBlockModifications();
                     this.saveRemovedPredefinedBlocks();
                     this.saveSnapshots();
+                    this.saveTodos();
 
                     // Re-render UI
                     this.createBlockBank();
                     this.renderBlocks();
                     this.renderSnapshots();
+                    this.renderTodos();
                     this.showToast('Importação concluída com sucesso!', 'success');
+                    
+                    // Auto-close the Memory Card section with animation
+                    const memoryCardContent = document.getElementById('memoryCardContent');
+                    const memoryCardToggleIcon = document.getElementById('memoryCardToggleIcon');
+                    if (memoryCardContent && memoryCardToggleIcon) {
+                        setTimeout(() => {
+                            this.toggleMinimize('memoryCard', memoryCardContent, memoryCardToggleIcon);
+                        }, 500); // Small delay to show the success message
+                    }
                 } catch (err) {
                     console.error(err);
                     this.showToast('Falha ao importar dados.', 'error');
@@ -2729,6 +3275,240 @@
                     importTextarea.value = '';
                     importTextarea.focus();
                     this.showToast('Área de importação limpa.', 'info');
+                }
+            }
+
+            // ===== Todo List Methods =====
+            addTodo() {
+                const input = document.getElementById('newTodoInput');
+                const text = input.value.trim();
+                
+                if (!text) {
+                    this.showToast('Por favor, digite uma tarefa.', 'error');
+                    return;
+                }
+                
+                const todo = {
+                    id: Date.now() + Math.random(),
+                    text: text,
+                    completed: false,
+                    createdAt: new Date().toISOString()
+                };
+                
+                this.todos.push(todo);
+                this.saveTodos();
+                this.renderTodos();
+                
+                // Clear input
+                input.value = '';
+                input.focus();
+                
+                this.showToast('Tarefa adicionada!', 'success');
+            }
+            
+            toggleTodo(todoId) {
+                const todo = this.todos.find(t => t.id === todoId);
+                if (todo) {
+                    todo.completed = !todo.completed;
+                    this.saveTodos();
+                    this.renderTodos();
+                }
+            }
+            
+            deleteTodo(todoId) {
+                this.todos = this.todos.filter(t => t.id !== todoId);
+                this.saveTodos();
+                this.renderTodos();
+                this.showToast('Tarefa removida.', 'info');
+            }
+            
+            startEditTodo(todoId) {
+                this.editingTodoId = todoId;
+                this.renderTodos();
+                
+                // Focus the input after a short delay to ensure it's rendered
+                setTimeout(() => {
+                    const input = document.querySelector(`[data-todo-id="${todoId}"] .todo-edit-input`);
+                    if (input) {
+                        input.focus();
+                        input.select();
+                    }
+                }, 10);
+            }
+            
+            saveEditTodo(todoId, newText) {
+                const todo = this.todos.find(t => t.id === todoId);
+                if (todo && newText.trim()) {
+                    todo.text = newText.trim();
+                    this.saveTodos();
+                    this.renderTodos();
+                    this.showToast('Tarefa atualizada!', 'success');
+                } else if (todo && !newText.trim()) {
+                    // If empty text, delete the todo
+                    this.deleteTodo(todoId);
+                }
+                this.editingTodoId = null;
+            }
+            
+            cancelEditTodo() {
+                this.editingTodoId = null;
+                this.renderTodos();
+            }
+            
+            renderTodos() {
+                const todoList = document.getElementById('todoList');
+                const noTodosMessage = document.getElementById('noTodosMessage');
+                
+                if (!todoList) return;
+                
+                if (this.todos.length === 0) {
+                    todoList.innerHTML = '';
+                    noTodosMessage.classList.remove('hidden');
+                    return;
+                }
+                
+                noTodosMessage.classList.add('hidden');
+                todoList.innerHTML = '';
+                
+                // Sort todos: incomplete first, then by creation date
+                const sortedTodos = [...this.todos].sort((a, b) => {
+                    if (a.completed !== b.completed) {
+                        return a.completed ? 1 : -1;
+                    }
+                    return new Date(a.createdAt) - new Date(b.createdAt);
+                });
+                
+                sortedTodos.forEach(todo => {
+                    const todoElement = this.createTodoElement(todo);
+                    todoList.appendChild(todoElement);
+                });
+            }
+            
+            createTodoElement(todo) {
+                const todoDiv = document.createElement('div');
+                todoDiv.className = 'todo-item';
+                todoDiv.dataset.todoId = todo.id;
+                
+                if (this.editingTodoId === todo.id) {
+                    // Edit mode
+                    todoDiv.innerHTML = `
+                        <div class="todo-checkbox ${todo.completed ? 'checked' : ''}"></div>
+                        <input type="text" class="todo-edit-input" value="${this.escapeHtml(todo.text)}">
+                        <button class="todo-delete-btn">×</button>
+                    `;
+                    
+                    // Add event listeners for edit mode
+                    const checkbox = todoDiv.querySelector('.todo-checkbox');
+                    const input = todoDiv.querySelector('.todo-edit-input');
+                    const deleteBtn = todoDiv.querySelector('.todo-delete-btn');
+                    
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.toggleTodo(todo.id);
+                    });
+                    
+                    input.addEventListener('blur', () => {
+                        this.saveEditTodo(todo.id, input.value);
+                    });
+                    
+                    input.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            this.saveEditTodo(todo.id, input.value);
+                        }
+                    });
+                    
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') {
+                            this.cancelEditTodo();
+                        }
+                    });
+                    
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.deleteTodo(todo.id);
+                    });
+                } else {
+                    // Normal mode
+                    todoDiv.innerHTML = `
+                        <div class="todo-checkbox ${todo.completed ? 'checked' : ''}"></div>
+                        <div class="todo-text ${todo.completed ? 'completed' : ''}">${this.escapeHtml(todo.text)}</div>
+                        <button class="todo-delete-btn">×</button>
+                    `;
+                    
+                    // Add event listeners for normal mode
+                    const checkbox = todoDiv.querySelector('.todo-checkbox');
+                    const text = todoDiv.querySelector('.todo-text');
+                    const deleteBtn = todoDiv.querySelector('.todo-delete-btn');
+                    
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.toggleTodo(todo.id);
+                    });
+                    
+                    text.addEventListener('dblclick', () => {
+                        this.startEditTodo(todo.id);
+                    });
+                    
+                    deleteBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.deleteTodo(todo.id);
+                    });
+                }
+                
+                return todoDiv;
+            }
+            
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+            
+            formatDuration(duration) {
+                if (duration === 0.5) return '30m';
+                if (duration === 1) return '1h';
+                if (duration === 1.5) return '1h30m';
+                if (duration === 2) return '2h';
+                if (duration === 2.5) return '2h30m';
+                if (duration === 3) return '3h';
+                if (duration === 3.5) return '3h30m';
+                if (duration === 4) return '4h';
+                if (duration === 4.5) return '4h30m';
+                if (duration === 5) return '5h';
+                if (duration === 5.5) return '5h30m';
+                if (duration === 6) return '6h';
+                if (duration === 6.5) return '6h30m';
+                if (duration === 7) return '7h';
+                if (duration === 7.5) return '7h30m';
+                if (duration === 8) return '8h';
+                if (duration === 8.5) return '8h30m';
+                if (duration === 9) return '9h';
+                if (duration === 9.5) return '9h30m';
+                if (duration === 10) return '10h';
+                if (duration === 10.5) return '10h30m';
+                if (duration === 11) return '11h';
+                if (duration === 11.5) return '11h30m';
+                if (duration === 12) return '12h';
+                
+                // Fallback for any other values
+                const hours = Math.floor(duration);
+                const minutes = Math.round((duration - hours) * 60);
+                if (minutes === 0) return `${hours}h`;
+                return `${hours}h${minutes}m`;
+            }
+            
+            saveTodos() {
+                localStorage.setItem('weeklyPlannerTodos', JSON.stringify(this.todos));
+            }
+            
+            loadTodos() {
+                const saved = localStorage.getItem('weeklyPlannerTodos');
+                if (saved) {
+                    try {
+                        this.todos = JSON.parse(saved);
+                    } catch (e) {
+                        this.todos = [];
+                    }
                 }
             }
         }
