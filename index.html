@@ -49,11 +49,12 @@
         
         /* Hour column styling */
         .grid-cell[data-day="hora"] {
-            background-color: #ffffff;
+            background-color: #ffffff !important;
             border-color: #cbd5e1;
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: -1;
         }
         
         .grid-cell[data-day="hora"]:hover {
@@ -598,6 +599,12 @@
             .grid-cell {
                 min-height: 60px;
             }
+            
+            /* Mobile hour cells styling - white background except for header */
+            .grid-cell[data-day="hora"] {
+                background-color: #ffffff !important;
+            }
+                        
             .hour-marker {
                 left: 50%;
                 font-size: 10px;
@@ -680,6 +687,20 @@
             /* Always show snapshot delete button on mobile */
             .snapshot-delete-btn {
                 opacity: 1 !important;
+            }
+            
+            /* Make hour column sticky on mobile horizontal scroll */
+            .calendar-content .grid-cols-8 > div:first-child,
+            .calendar-content .grid-cols-8 > div[data-day="hora"] {
+                position: sticky;
+                left: 0;
+                z-index: 20;
+            }       
+             
+           
+            /* Ensure Hora column cells have solid background to hide content behind when scrolling, but keep hour cells white */
+            .calendar-content .grid-cols-8 > div:first-child:not([data-day="hora"]) {
+                background-color: #16213E !important;
             }
         }
     </style>
@@ -921,7 +942,7 @@
         </div>
 
         <!-- Calendar Grid -->
-        <div class="bg-dark-card rounded-lg shadow-xl overflow-hidden calendar-section">
+        <div class="rounded-lg shadow-xl overflow-hidden calendar-section">
             <div class="calendar-content">
                 <div class="day-header p-4 relative">
                     <h2 class="text-xl font-bold text-center">
@@ -943,7 +964,11 @@
                 
                 <!-- Days Header -->
                 <div class="grid grid-cols-8 bg-dark-border">
-                    <div class="p-3 text-center font-bold text-game-purple">Hora</div>
+                    <div class="p-3 text-center font-bold text-game-purple flex items-center justify-center gap-2">
+                        <button id="hourShiftDown" class="w-6 h-6 bg-game-purple hover:bg-purple-600 text-white rounded text-sm font-bold transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed" title="Ver horas anteriores">−</button>
+                        <span>Hora</span>
+                        <button id="hourShiftUp" class="w-6 h-6 bg-game-purple hover:bg-purple-600 text-white rounded text-sm font-bold transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed" title="Ver próximas horas">+</button>
+                    </div>
                     <div class="p-3 text-center font-bold">Segunda</div>
                     <div class="p-3 text-center font-bold">Terça</div>
                     <div class="p-3 text-center font-bold">Quarta</div>
@@ -1322,6 +1347,12 @@
                 }
                 this.hours.push(0); // Add 0:00 at the end
                 
+                // Hour shifting functionality
+                this.startHour = 6; // Current starting hour for display
+                this.endHour = 0;   // Current ending hour for display
+                this.minStartHour = 1; // Minimum start hour (01:00)
+                this.maxStartHour = 10; // Maximum start hour (10:00)
+                
                 this.days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
                 
                 this.predefinedBlocks = [
@@ -1402,6 +1433,7 @@
             }
             
             init() {
+                this.loadHourRange();
                 this.createCalendarGrid();
                 this.loadRemovedPredefinedBlocks();
                 this.loadPredefinedBlockModifications();
@@ -1491,16 +1523,18 @@
 
             // Convert a (hour, startHalf) into a half-slot index within the day
             toHalfSlotIndex(hour, startHalf) {
-                const hourIndex = this.getHourIndex(hour);
+                const displayHours = this.generateDisplayHours();
+                const hourIndex = displayHours.indexOf(hour);
                 if (hourIndex === -1) return -1;
                 return hourIndex * 2 + (startHalf ? 1 : 0);
             }
 
             // Convert half-slot index back to (hour, startHalf)
             fromHalfSlotIndex(slotIndex) {
+                const displayHours = this.generateDisplayHours();
                 const hourIndex = Math.floor(slotIndex / 2);
                 const startHalf = slotIndex % 2 === 1;
-                const hour = this.hours[hourIndex];
+                const hour = displayHours[hourIndex];
                 return { hour, startHalf };
             }
 
@@ -1519,8 +1553,13 @@
 
                 const start = this.toHalfSlotIndex(targetHour, !!targetStartHalf);
                 const span = Math.round(block.duration * 2);
-                // Out of range
-                if (start < 0 || start + span > this.hours.length * 2) return true;
+                
+                // Check if target hour exists in current display hours
+                const displayHours = this.generateDisplayHours();
+                if (!displayHours.includes(targetHour)) return true;
+                
+                // Out of range - use display hours length instead of original hours
+                if (start < 0 || start + span > displayHours.length * 2) return true;
                 for (let i = 0; i < span; i++) {
                     if (occupied.has(start + i)) return true;
                 }
@@ -1529,7 +1568,8 @@
 
             // Find next available position in half-hour resolution starting from a preferred (hour, half)
             findAlternativeHalfPosition(block, preferredHour, preferredDay, preferredStartHalf) {
-                const totalSlots = this.hours.length * 2;
+                const displayHours = this.generateDisplayHours();
+                const totalSlots = displayHours.length * 2;
                 const startSlot = Math.max(0, this.toHalfSlotIndex(preferredHour, !!preferredStartHalf));
                 const span = Math.round(block.duration * 2);
                 for (let slot = startSlot; slot + span <= totalSlots; slot++) {
@@ -1545,7 +1585,10 @@
                 const grid = document.getElementById('calendarGrid');
                 grid.innerHTML = '';
                 
-                this.hours.forEach(hour => {
+                // Generate display hours based on current start/end
+                const displayHours = this.generateDisplayHours();
+                
+                displayHours.forEach(hour => {
                     // Hour marker
                     const hourCell = document.createElement('div');
                     hourCell.className = 'grid-cell relative';
@@ -1565,6 +1608,57 @@
                         grid.appendChild(cell);
                     }
                 });
+                
+                // Update button states
+                this.updateHourShiftButtons();
+            }
+            
+            generateDisplayHours() {
+                const displayHours = [];
+                
+                // Always generate from startHour to 23, then 0 to endHour (00:00)
+                // This creates the full range that wraps around midnight
+                for (let i = this.startHour; i <= 23; i++) {
+                    displayHours.push(i);
+                }
+                // Always include 00:00 at the end
+                displayHours.push(0);
+                
+                return displayHours;
+            }
+            
+            shiftHoursUp() {
+                if (this.startHour > this.minStartHour) {
+                    this.startHour--;
+                    this.endHour = (this.endHour - 1 + 24) % 24; // Handle wrap-around
+                    this.createCalendarGrid();
+                    this.renderBlocks(); // Re-render blocks for new hours
+                    this.saveHourRange(); // Save the new hour range
+                }
+            }
+            
+            shiftHoursDown() {
+                if (this.startHour < this.maxStartHour) {
+                    this.startHour++;
+                    // Keep endHour always at 00:00 (midnight)
+                    this.endHour = 0;
+                    this.createCalendarGrid();
+                    this.renderBlocks(); // Re-render blocks for new hours
+                    this.saveHourRange(); // Save the new hour range
+                }
+            }
+            
+            updateHourShiftButtons() {
+                const shiftUpBtn = document.getElementById('hourShiftUp');
+                const shiftDownBtn = document.getElementById('hourShiftDown');
+                
+                if (shiftUpBtn) {
+                    shiftUpBtn.disabled = this.startHour <= this.minStartHour;
+                }
+                
+                if (shiftDownBtn) {
+                    shiftDownBtn.disabled = this.startHour >= this.maxStartHour;
+                }
             }
             
             setupMinimizeButtons() {
@@ -1794,6 +1888,10 @@
                 document.getElementById('closeModal').addEventListener('click', () => this.closeModal());
                 document.getElementById('saveBtn').addEventListener('click', () => this.saveBlock());
                 document.getElementById('deleteBtn').addEventListener('click', () => this.deleteBlock());
+                
+                // Hour shift buttons
+                document.getElementById('hourShiftUp').addEventListener('click', () => this.shiftHoursUp());
+                document.getElementById('hourShiftDown').addEventListener('click', () => this.shiftHoursDown());
                 
                 // Color selection
                 document.querySelectorAll('.color-btn').forEach(btn => {
@@ -2588,6 +2686,23 @@
                 }
             }
             
+            saveHourRange() {
+                const hourRange = {
+                    startHour: this.startHour,
+                    endHour: this.endHour
+                };
+                localStorage.setItem('weeklyPlannerHourRange', JSON.stringify(hourRange));
+            }
+            
+            loadHourRange() {
+                const saved = localStorage.getItem('weeklyPlannerHourRange');
+                if (saved) {
+                    const hourRange = JSON.parse(saved);
+                    this.startHour = hourRange.startHour || 6;
+                    this.endHour = hourRange.endHour || 0;
+                }
+            }
+            
             loadCustomBlocks() {
                 const saved = localStorage.getItem('weeklyPlannerCustomBlocks');
                 if (saved) {
@@ -2955,8 +3070,8 @@
             createThumbnailGrid(thumbnail) {
                 let gridHTML = '';
                 
-                // Create 7 days x 18 hours grid (6-23 + 0)
-                for (let hour = 6; hour <= 23; hour++) {
+                // Create 7 days x 18 hours grid (7-23 + 0) - standardized to 07:00 to 00:00
+                for (let hour = 7; hour <= 23; hour++) {
                     for (let day = 0; day < 7; day++) {
                         gridHTML += `<div class="snapshot-thumbnail-cell" data-hour="${hour}" data-day="${day}"></div>`;
                     }
@@ -3117,13 +3232,16 @@
             loadSnapshot() {
                 if (!this.selectedSnapshot) return;
                 
+                // Store snapshot name before closing modal
+                const snapshotName = this.selectedSnapshot.name;
+                
                 // Load the snapshot blocks
                 this.blocks = JSON.parse(JSON.stringify(this.selectedSnapshot.blocks));
                 this.renderBlocks();
                 this.saveBlocks();
                 this.closeLoadSnapshotModal();
                 
-                this.showToast(`Captura "${this.selectedSnapshot.name}" carregada com sucesso!`, 'success');
+                this.showToast(`Captura "${snapshotName}" carregada com sucesso!`, 'success');
             }
             
             deleteSnapshot(snapshotId) {
