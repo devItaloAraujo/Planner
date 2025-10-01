@@ -1771,55 +1771,42 @@
                     icon.textContent = '+';
                 }
                 
-                // Save state
-                this.saveMinimizeState(section, !isMinimized);
+                // Persistence removed; do not save state
             }
             
-            saveMinimizeState(section, isMinimized) {
-                // Do not persist Memory Card section state across sessions
-                if (section === 'memoryCard') return;
-                const states = JSON.parse(localStorage.getItem('minimizeStates') || '{}');
-                states[section] = isMinimized;
-                localStorage.setItem('minimizeStates', JSON.stringify(states));
-            }
+            
             
             loadMinimizeStates() {
-                const states = JSON.parse(localStorage.getItem('minimizeStates') || '{}');
-                
-                // Load creator state
+                // Persistence removed: default all sections to minimized on load
                 const creatorContent = document.getElementById('creatorContent');
                 const creatorToggleIcon = document.getElementById('creatorToggleIcon');
-                if (states.creator) {
+                if (creatorContent && creatorToggleIcon) {
                     creatorContent.classList.add('minimized');
                     creatorToggleIcon.textContent = '+';
                 }
-                
-                // Load bank state
+
                 const bankContent = document.getElementById('bankContent');
                 const bankToggleIcon = document.getElementById('bankToggleIcon');
-                if (states.bank) {
+                if (bankContent && bankToggleIcon) {
                     bankContent.classList.add('minimized');
                     bankToggleIcon.textContent = '+';
                 }
 
-                // Load snapshots state
                 const snapshotsContent = document.getElementById('snapshotsContent');
                 const snapshotsToggleIcon = document.getElementById('snapshotsToggleIcon');
-                if (states.snapshots && snapshotsContent && snapshotsToggleIcon) {
+                if (snapshotsContent && snapshotsToggleIcon) {
                     snapshotsContent.classList.add('minimized');
                     snapshotsToggleIcon.textContent = '+';
                 }
 
-                // Load support state
                 const supportContent = document.getElementById('supportContent');
                 const supportToggleIcon = document.getElementById('supportToggleIcon');
-                if (states.support && supportContent && supportToggleIcon) {
+                if (supportContent && supportToggleIcon) {
                     supportContent.classList.add('minimized');
                     supportToggleIcon.textContent = '+';
                 }
 
-
-                // Memory Card: always start minimized (don't read persisted state)
+                // Memory Card: always start minimized
                 const memoryCardContent = document.getElementById('memoryCardContent');
                 const memoryCardToggleIcon = document.getElementById('memoryCardToggleIcon');
                 if (memoryCardContent && memoryCardToggleIcon) {
